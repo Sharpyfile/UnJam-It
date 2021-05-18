@@ -836,8 +836,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "JANEX Gaming\nJakub Guzek: \ngameplay programmer\nAntonina Matuszek: \nlead/2D
-    artist\nNatalia Wylezi\u0144ska: \n2D artist"
+  m_Text: "JANEX Gaming\nJakub Guzek: \nGameplay Developer\nAntonina Matuszek: \nLead/2D
+    Artist\nNatalia Wylezi\u0144ska: \n2D Artist"
 --- !u!222 &588563292
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -22,13 +22,13 @@ public class GameController : MonoBehaviour
     {
         fails.text = failsString + currentFails + '/' + maxFails;
         passes.text = passesString + currentPasses + '/' + requiredPasses;
-        if (maxFails == currentFails)
+        if (maxFails <= currentFails)
         {
             failMessage.SetActive(true);
             gameplayObjects.SetActive(false);
         }
 
-        if (requiredPasses == currentPasses)
+        if (requiredPasses <= currentPasses && requiredPasses > 0)
         {
             winMessage.SetActive(true);
             gameplayObjects.SetActive(false);

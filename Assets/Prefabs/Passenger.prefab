@@ -182,9 +182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPosition: {x: 0, y: 0}
-  passengerManager: {fileID: 2621044862505797538, guid: f3a5942dd20c1a04882628d0fd611f2c, type: 3}
-  levelOfAnnoyance: 10
-  maxAnnoyance: 10
+  levelOfAnnoyance: 6
+  maxAnnoyance: 6
   threshehold: 0.01
   destination: 
   placeInArray: 0

@@ -71,8 +71,8 @@ public class PassengerManager : MonoBehaviour
                     break;
                 case "":
                     passengers[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
-                    passengers[i].GetComponent<Passenger>().maxAnnoyance = 5.0f;
-                    passengers[i].GetComponent<Passenger>().levelOfAnnoyance = 5.0f;
+                    passengers[i].GetComponent<Passenger>().maxAnnoyance = 2.5f;
+                    passengers[i].GetComponent<Passenger>().levelOfAnnoyance = 2.5f;
                     break;
             }
 
