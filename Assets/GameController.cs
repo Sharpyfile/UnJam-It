@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public List<Destination> destinations = new List<Destination>();
     public int maxFails = 3;
     public int currentFails = 0;
     public int requiredPasses = 10;

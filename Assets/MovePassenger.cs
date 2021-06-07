@@ -21,7 +21,7 @@ public class MovePassenger : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-            if (passengerCollider == Physics2D.OverlapPoint(touchPosition))
+            if (passengerCollider == Physics2D.OverlapPoint(touchPosition) && GetComponent<Passenger>().canBeTouched)
             {
                 isTouched = true;
             }

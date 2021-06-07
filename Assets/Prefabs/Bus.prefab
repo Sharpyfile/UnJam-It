@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 3469095404013620853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: -2.75, z: 0}
-  m_LocalScale: {x: 1.5, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 8387450496383821677}
   m_Father: {fileID: 0}
@@ -161,6 +161,7 @@ MonoBehaviour:
   destination: "Ba\u0142uty"
   timeRemaining: 10
   maxTime: 10
+  threshehold: 0.01
 --- !u!50 &3469095404013620862
 Rigidbody2D:
   serializedVersion: 4

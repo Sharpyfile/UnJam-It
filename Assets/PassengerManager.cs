@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PassengerManager : MonoBehaviour
 {
-    public List<Passenger> passengers = new List<Passenger>();
+    public Passenger passenger1Object;
+    public Passenger passenger2Object;
     public Passenger passengerPrefab;
     public Vector2 passenger1;
     public Vector2 passenger2;
-    public Vector2 passenger3;
-    public List<string> destinations;
+    public List<Destination> destinations;
+    public float maxAnnoyance = 2.5f;
     void Start()
     {
         FillSpace();
@@ -18,65 +19,55 @@ public class PassengerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (passengers.Count == 0)
-            FillSpace();
+        FillSpace();
     }
 
     public void FillSpace()
     {
-        for (int i = 0; i < 3; i++)
+        if (passenger1Object == null)
         {
-            switch (i)
+            passenger1Object = Instantiate(passengerPrefab, new Vector3(-5, -5), Quaternion.identity);
+            passenger1Object.GetComponent<Passenger>().startingPosition = passenger1;
+            Random.InitState(System.Environment.TickCount);
+            var number = Random.Range(0, destinations.Count);
+            passenger1Object.GetComponent<Passenger>().destination = destinations[number].destinationName;
+            Color temp = destinations[number].destinationColor;
+            passenger1Object.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            passenger1Object.transform.parent = GameObject.Find("Gameplay").transform;
+            if (passenger1Object.GetComponent<Passenger>().destination == "")
             {
-                case 0:
-                    passengers.Add(Instantiate(passengerPrefab, new Vector3(-5, -5), Quaternion.identity));
-                    passengers[i].GetComponent<Passenger>().startingPosition = passenger1;
-                    Random.InitState(System.Environment.TickCount + i);
-                    var number1 = Random.Range(0, destinations.Count);
-                    passengers[i].GetComponent<Passenger>().destination = destinations[number1];
-                    passengers[i].placeInArray = i;
-                    passengers[i].transform.parent = GameObject.Find("Gameplay").transform;
-                    break;
-
-                case 1:
-                    passengers.Add(Instantiate(passengerPrefab, new Vector3(-5, -5), Quaternion.identity));
-                    passengers[i].GetComponent<Passenger>().startingPosition = passenger2;
-                    Random.InitState(System.Environment.TickCount + i);
-                    var number2 = Random.Range(0, destinations.Count);
-                    passengers[i].GetComponent<Passenger>().destination = destinations[number2];
-                    passengers[i].placeInArray = i;
-                    passengers[i].transform.parent = GameObject.Find("Gameplay").transform;
-                    break;
-
-                case 2:
-                    passengers.Add(Instantiate(passengerPrefab, new Vector3(-5, -5), Quaternion.identity));
-                    passengers[i].GetComponent<Passenger>().startingPosition = passenger3;
-                    var number3 = Random.Range(0, destinations.Count);
-                    passengers[i].GetComponent<Passenger>().destination = destinations[number3];
-                    passengers[i].placeInArray = i;
-                    passengers[i].transform.parent = GameObject.Find("Gameplay").transform;
-                    break;
+                passenger1Object.GetComponent<Passenger>().maxAnnoyance = maxAnnoyance;
+                passenger1Object.GetComponent<Passenger>().levelOfAnnoyance = maxAnnoyance;
             }
+            passenger1Object.canBeTouched = true;
+        }
 
-            switch (passengers[i].GetComponent<Passenger>().destination)
+        if (passenger2Object == null)
+        {            
+            passenger2Object = Instantiate(passengerPrefab, new Vector3(-5, -5), Quaternion.identity);
+            passenger2Object.GetComponent<Passenger>().startingPosition = passenger2;
+            Random.InitState(System.Environment.TickCount + 1);
+            var number = Random.Range(0, destinations.Count);
+            passenger2Object.GetComponent<Passenger>().destination = destinations[number].destinationName;
+            Color temp = destinations[number].destinationColor;
+            passenger2Object.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            passenger2Object.transform.parent = GameObject.Find("Gameplay").transform;
+            if (passenger2Object.GetComponent<Passenger>().destination == "")
             {
-                case "Ba³uty":
-                    passengers[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
-                    break;
-                case "Politechniki":
-                    passengers[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.blue;
-                    break;
-                case "Pabianice":
-                    passengers[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.yellow;
-                    break;
-                case "":
-                    passengers[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.black;
-                    passengers[i].GetComponent<Passenger>().maxAnnoyance = 2.5f;
-                    passengers[i].GetComponent<Passenger>().levelOfAnnoyance = 2.5f;
-                    break;
+                passenger2Object.GetComponent<Passenger>().maxAnnoyance = maxAnnoyance;
+                passenger2Object.GetComponent<Passenger>().levelOfAnnoyance = maxAnnoyance;
             }
-
-        
+            passenger2Object.canBeTouched = false;
         }
     }
+    public void ResetPassengers()
+    {
+        passenger1Object = null;
+        passenger1Object = passenger2Object;
+        passenger2Object = null;
+        passenger1Object.canBeTouched = true;
+        passenger1Object.startingPosition = passenger1;
+        passenger1Object.transform.position = passenger1;
+    }
+    
 }

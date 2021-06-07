@@ -20,6 +20,16 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene("ThirdLevel");
     }
 
+    public void LoadFourthLevel()
+    {
+        SceneManager.LoadScene("FourthLevel");
+    }
+
+    public void LoadFifthLevel()
+    {
+        SceneManager.LoadScene("FifthLevel");
+    }
+
     public void LoadEndlessMode()
     {
         SceneManager.LoadScene("EndlessMode");
