@@ -15,14 +15,14 @@ public class BusCooldown : MonoBehaviour
     {
         if (currentTime < maxTime && bus.activeSelf == false)
         {
-            meter.GetComponent<SpriteRenderer>().color = bus.GetComponent<SpriteRenderer>().color;
+            meter.GetComponent<Renderer>().material.color = bus.GetComponent<Renderer>().material.color;
             currentTime += Time.deltaTime;
             float tempTime = currentTime / maxTime;
             if (maxTime - currentTime < threshehold)
             {
                 bus.GetComponent<BusManager>().timeRemaining = bus.GetComponent<BusManager>().maxTime;
                 bus.SetActive(true);
-                meter.GetComponent<SpriteRenderer>().color = Color.white;
+                meter.GetComponent<Renderer>().material.color = Color.white;
                 currentTime = 0.0f;
                 
             }

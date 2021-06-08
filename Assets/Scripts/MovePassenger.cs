@@ -6,30 +6,26 @@ public class MovePassenger : MonoBehaviour
 {
     // Start is called before the first frame update
     private Vector2 touchPosition;
-    private BoxCollider2D passengerCollider;
+    private Touch touch;
     [HideInInspector]
     public bool isTouched = false;
-    void Start()
-    {
-        passengerCollider = GetComponent<BoxCollider2D>();
-    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
-            touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-            if (passengerCollider == Physics2D.OverlapPoint(touchPosition) && GetComponent<Passenger>().canBeTouched)
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit))
             {
-                isTouched = true;
+                if (raycastHit.collider.tag == "Passenger" && GetComponent<Passenger>().canBeTouched)
+                    isTouched = true;
             }
         }
         else
-        {
             isTouched = false;
-        }
+        
         Move();
 
     }
@@ -38,7 +34,8 @@ public class MovePassenger : MonoBehaviour
     {
         if (isTouched)
         {
-            transform.position = touchPosition;
+            touchPosition = Input.GetTouch(0).position;
+            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, -Camera.main.transform.position.z));
         }
         else
         {

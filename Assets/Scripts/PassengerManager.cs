@@ -32,7 +32,7 @@ public class PassengerManager : MonoBehaviour
             var number = Random.Range(0, destinations.Count);
             passenger1Object.GetComponent<Passenger>().destination = destinations[number].destinationName;
             Color temp = destinations[number].destinationColor;
-            passenger1Object.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            passenger1Object.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(temp.r, temp.g, temp.b, 1.0f);
             passenger1Object.transform.parent = GameObject.Find("Gameplay").transform;
             if (passenger1Object.GetComponent<Passenger>().destination == "")
             {
@@ -50,7 +50,7 @@ public class PassengerManager : MonoBehaviour
             var number = Random.Range(0, destinations.Count);
             passenger2Object.GetComponent<Passenger>().destination = destinations[number].destinationName;
             Color temp = destinations[number].destinationColor;
-            passenger2Object.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            passenger2Object.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(temp.r, temp.g, temp.b, 1.0f);
             passenger2Object.transform.parent = GameObject.Find("Gameplay").transform;
             if (passenger2Object.GetComponent<Passenger>().destination == "")
             {

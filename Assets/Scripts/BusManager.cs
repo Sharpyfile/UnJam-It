@@ -39,8 +39,9 @@ public class BusManager : MonoBehaviour
         }            
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.transform.tag);
         if (collision.transform.tag == "Passenger")
         {
             if (collision.transform.GetComponent<Passenger>().destination == destination)
@@ -65,12 +66,11 @@ public class BusManager : MonoBehaviour
         do
         {
             var number = Random.Range(0, gameController.destinations.Count);
-            Debug.Log(number);
             destination = gameController.destinations[number].destinationName;
             Color temp = gameController.destinations[number].destinationColor;
             maxTime = gameController.destinations[number].destinationMaxtime;
             timeRemaining = gameController.destinations[number].destinationMaxtime;
-            GetComponent<SpriteRenderer>().color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            GetComponent<Renderer>().material.color = new Color(temp.r, temp.g, temp.b, 1.0f);
             Random.InitState(System.Environment.TickCount + i);
             i++;
         }

@@ -43,11 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dcd3e20337dc145b5b3a0d514b90c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passengers: []
-  passengerPrefab: {fileID: 8288698269022095481, guid: 5ed54c89788538145b7ef50654a8235d, type: 3}
-  passenger1: {x: -1.75, y: -1.75}
-  passenger2: {x: -1.75, y: -3}
-  passenger3: {x: -1.75, y: -4.25}
+  passenger1Object: {fileID: 0}
+  passenger2Object: {fileID: 0}
+  passengerPrefab: {fileID: 1368364439023260259, guid: 80c58caf8061c59409ff99990fd00a01, type: 3}
+  passenger1: {x: 0, y: -3.75}
+  passenger2: {x: 0, y: -5}
   destinations:
-  - "Ba\u0142uty"
-  - Politechniki
+  - {fileID: 0}
+  - {fileID: 0}
+  maxAnnoyance: 2.5
