@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BusCooldown : MonoBehaviour
 {
+    
     public GameObject bus;
     public GameObject meter;
     public float currentTime = 0.0f;
@@ -22,7 +23,12 @@ public class BusCooldown : MonoBehaviour
             {
                 bus.GetComponent<BusManager>().timeRemaining = bus.GetComponent<BusManager>().maxTime;
                 bus.SetActive(true);
+                bus.GetComponent<BusManager>().justActivated = true;
                 meter.GetComponent<Renderer>().material.color = Color.white;
+                if (bus.GetComponent<BusManager>().departRight)
+                    bus.gameObject.GetComponent<Animator>().Play("BusArriveRight");
+                else
+                    bus.gameObject.GetComponent<Animator>().Play("BusArriveLeft");
                 currentTime = 0.0f;
                 
             }

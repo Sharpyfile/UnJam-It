@@ -12,6 +12,7 @@ public class Passenger : MonoBehaviour
     public float maxAnnoyance = 10;
     public float threshehold = 0.01f;
     public float annoyanceMultiplier = 0.1f;
+    public float repealMultiplier = 3f;
     public string destination;
     [HideInInspector]
     public int placeInArray;
@@ -26,19 +27,24 @@ public class Passenger : MonoBehaviour
 
     private void Update()
     {
-        if (GetComponent<MovePassenger>().isTouched && destination == "")
-        {
-            gameController.currentFails++;
-            passengerManager.passenger1Object = null;
-            Destroy(gameObject);
-        }
 
         if (levelOfAnnoyance > 0)
         {
-            if (GetComponent<MovePassenger>().isTouched)
-                levelOfAnnoyance -= Time.deltaTime * annoyanceMultiplier;
-            else if (canBeTouched)
-                levelOfAnnoyance -= Time.deltaTime;
+            if (destination == "")
+            {
+                if (GetComponent<MovePassenger>().isTouched && GetComponent<MovePassenger>().isShaked)
+                    levelOfAnnoyance -= Time.deltaTime * repealMultiplier;
+                else if (canBeTouched)
+                    levelOfAnnoyance -= Time.deltaTime;
+            }
+            else
+            {
+                if (GetComponent<MovePassenger>().isTouched && GetComponent<MovePassenger>().isShaked)
+                    levelOfAnnoyance -= Time.deltaTime * annoyanceMultiplier;
+                else if (canBeTouched)
+                    levelOfAnnoyance -= Time.deltaTime;
+            }
+            
                 
             float tempTime = levelOfAnnoyance / maxAnnoyance;
             if (tempTime < threshehold)

@@ -5,7 +5,10 @@ using UnityEngine;
 public class BusManager : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    [Header("To play animation of departure to the right, check box, for left uncheck")]
+    public bool departRight = true;
+    public bool justActivated = false;
+    private bool departed = false;
     public GameController gameController;
     public GameObject meter;
     public PassengerManager passengerManager;
@@ -21,19 +24,27 @@ public class BusManager : MonoBehaviour
     }
     private void Awake()
     {
+        departed = false;
+        justActivated = true;
         meter.transform.localScale = (new Vector3(meter.transform.localScale.x, 1.75f, meter.transform.localScale.z));
     }
     // Update is called once per frame
     void Update()
     {
+        justActivated = false;
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
             float tempTime = timeRemaining / maxTime;
             if (tempTime < threshehold)
             {
-                GenerateNewDestination();
-                gameObject.SetActive(false); 
+                departed = true;
+                GetComponent<Collider>().enabled = false;
+                if (departRight)
+                    GetComponent<Animator>().Play("BusDepartureRight");
+                else
+                    GetComponent<Animator>().Play("BusDepartureLeft");
+                
             }
             meter.transform.localScale = (new Vector3(meter.transform.localScale.x, tempTime, meter.transform.localScale.z));
         }            
@@ -41,7 +52,6 @@ public class BusManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.transform.tag);
         if (collision.transform.tag == "Passenger")
         {
             if (collision.transform.GetComponent<Passenger>().destination == destination)
@@ -63,18 +73,41 @@ public class BusManager : MonoBehaviour
     private void GenerateNewDestination()
     {
         int i = 0;
-        do
+        for(;;)
         {
-            var number = Random.Range(0, gameController.destinations.Count);
-            destination = gameController.destinations[number].destinationName;
-            Color temp = gameController.destinations[number].destinationColor;
-            maxTime = gameController.destinations[number].destinationMaxtime;
-            timeRemaining = gameController.destinations[number].destinationMaxtime;
+            if (gameController.destinationsForGeneration.Count <= 1)
+                gameController.CopyDestination();
+            var number = Random.Range(0, gameController.destinationsForGeneration.Count);
+            destination = gameController.destinationsForGeneration[number].destinationName;
+            if (destination == "")
+                continue;
+            Color temp = gameController.destinationsForGeneration[number].destinationColor;
+            maxTime = gameController.destinationsForGeneration[number].destinationMaxtime;
+            timeRemaining = gameController.destinationsForGeneration[number].destinationMaxtime;
             GetComponent<Renderer>().material.color = new Color(temp.r, temp.g, temp.b, 1.0f);
+            gameController.destinationsForGeneration.RemoveAt(number);
             Random.InitState(System.Environment.TickCount + i);
             i++;
+            break;
         }
-        while(destination == "");
+    }
 
+    public void DisableBus()
+    {
+        if (!justActivated)
+            gameObject.SetActive(false); 
+
+        GetComponent<Collider>().enabled = true;
+            
+    }
+
+    public void ActivateGeneration()
+    {
+        if (departed)
+        {
+            departed = false;
+            GenerateNewDestination();
+        }
+            
     }
 }

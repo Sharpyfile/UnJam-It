@@ -9,6 +9,8 @@ public class MovePassenger : MonoBehaviour
     private Touch touch;
     [HideInInspector]
     public bool isTouched = false;
+    public bool isShaked = false;
+    private Vector3 ealierPosition = Vector3.zero;
 
     // Update is called once per frame
     void Update()
@@ -24,7 +26,11 @@ public class MovePassenger : MonoBehaviour
             }
         }
         else
+        {
             isTouched = false;
+            isShaked = false;
+        }
+            
         
         Move();
 
@@ -34,8 +40,15 @@ public class MovePassenger : MonoBehaviour
     {
         if (isTouched)
         {
+            ealierPosition = transform.position;
             touchPosition = Input.GetTouch(0).position;
-            transform.position = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, -Camera.main.transform.position.z));
+            Vector3 nextPosition = Camera.main.ScreenToWorldPoint(new Vector3(touchPosition.x, touchPosition.y, -Camera.main.transform.position.z));
+            if (Vector3.Distance(transform.position, nextPosition) > Vector3.Distance(transform.position, ealierPosition))
+                isShaked = true;
+            else
+                isShaked = false;
+            transform.position = nextPosition;
+            
         }
         else
         {

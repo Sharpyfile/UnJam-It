@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationColor: {r: 1, g: 0, b: 0.6980634, a: 0}
   destinationName: Zgierz
-  destinationMaxtime: 2
+  destinationMaxtime: 3
 --- !u!1 &3469698772242622078
 GameObject:
   m_ObjectHideFlags: 0
